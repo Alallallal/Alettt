@@ -1,0 +1,40 @@
+import random
+import logging
+from .. import loader, utils
+import asyncio
+
+logger = logging.getLogger(__name__)
+
+def register(cb):
+    cb(ArtsMod())
+
+class ArtsMod(loader.Module):
+    """Юникод арты"""
+    strings = {'name': 'Arts'}
+
+    async def swastikacmd(self, message):
+        """Используй .swastika"""
+        swastika = (
+            "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
+            "⣿⣿⣿⣿⣿⣿⠟⠛⠉⣩⣍⠉⠛⠻⣿⣿⣿⣿⣿⣿\n"
+            "⣿⣿⣿⣿⠋⠀⠀⣠⣾⣿⠟⠁⠀⠀⠀⠙⣿⣿⣿⣿\n"
+            "⣿⣿⣿⠁⠀⠀⢾⣿⣟⠁⠀⣠⣾⣷⣄⠀⠘⣿⣿⣿\n"
+            "⣿⣿⡇⣠⣦⡀⠀⠙⢿⣷⣾⡿⠋⠻⣿⣷⣄⢸⣿⣿\n"
+            "⣿⣿⡇⠙⢿⣿⣦⣠⣾⡿⢿⣷⣄⠀⠈⠻⠋⢸⣿⣿\n"
+            "⣿⣿⣿⡀⠀⠙⢿⡿⠋⠀⢀⣽⣿⡷⠀⠀⢠⣿⣿⣿\n"
+            "⣿⣿⣿⣿⣄⠀⠀⠀⢀⣴⣿⡿⠋⠀⠀⣠⣿⣿⣿⣿\n"
+            "⣿⣿⣿⣿⣿⣿⣦⣤⣀⣙⣋⣀⣤⣴⣿⣿⣿⣿⣿⣿\n"
+            "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
+        )
+
+        # Edit the message only if the content has changed
+        if message.text != swastika:
+            await message.edit(swastika)
+
+        # Set up the rotation animation
+        for _ in range(10):
+            swastika = swastika[-1] + swastika[:-1]
+            # Edit the message only if the content has changed
+            if message.text != swastika:
+                await message.edit(swastika)
+            await asyncio.sleep(0.5)
